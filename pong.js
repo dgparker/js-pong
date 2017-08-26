@@ -1,4 +1,7 @@
 var board;
+var playerScore = 0;
+var aiScore = 0;
+
 function start() { 
     board.start();
     playerPaddle = new paddle(25, 100, 'white', 25, (board.canvas.height/2), 'player');
@@ -23,6 +26,18 @@ var board = {
     },
     clear: function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        //draw dashed line
+        this.context.beginPath();
+        this.context.setLineDash([5, 5]);
+        this.context.moveTo(400, 0);
+        this.context.lineTo(400, 625);
+        this.context.strokeStyle = 'white';
+        this.context.stroke();
+        //draw score
+        this.context.font = "30px Arial";
+        this.context.fillText(playerScore, 325, 30);
+        this.context.font = "30px Arial";
+        this.context.fillText(aiScore, 450, 30);
     }
 }
 
@@ -31,24 +46,6 @@ function move(key, paddle){
         paddle.speedY -= 5;
     }else if(key && key === 83){
         paddle.speedY += 5;
-    }
-}
-
-function moveBall(ball){
-    ball.speedY = 1;
-    ball.speedX = 1;
-}
-
-function updateBall(ball){
-    if(ball.x > board.canvas.width){
-        ball.x = board.canvas.width/2;
-        ball.y = board.canvas.height/2;
-    }else if(ball.x < board.canvas.width){
-        ball.x = board.canvas.width/2;
-        ball.y = board.canvas.height/2;
-    }else{
-        ball.x += ball.speedX;
-        ball.y += ball.speedY;
     }
 }
 
@@ -102,23 +99,25 @@ function ball(width, height, color, x, y){
             this.y = board.canvas.height/2;
             this.speedY = randomSpeed();
             this.speedX = randomSpeed();
+            playerScore++;
         }else if(this.x < 0 - this.width){
             this.x = board.canvas.width/2;
             this.y = board.canvas.height/2;
             this.speedY = randomSpeed();
             this.speedX = randomSpeed();
+            aiScore++;
         }else{
             this.x += this.speedX;
             this.y += this.speedY;
         }        
     }
     this.deflect = function(paddle) {
-        if(paddle.name === "player" && this.x === paddle.x + paddle.width){
+        if(paddle.name === "player" && this.x >= paddle.x && this.x <= paddle.x + paddle.width){
             if(this.y >= paddle.y && this.y <= paddle.y + paddle.height){
                 this.speedX = this.speedX * -1;
                 this.x += this.speedX;
             }            
-        }else if(paddle.name === "ai" && this.x === paddle.x - 10){
+        }else if(paddle.name === "ai" && this.x >= paddle.x && this.x <= paddle.x + paddle.width){
             if(this.y >= paddle.y && this.y <= paddle.y + paddle.height){
                 this.speedX = this.speedX * -1;
                 this.x += this.speedX;
