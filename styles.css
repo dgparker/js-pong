@@ -1,4 +1,11 @@
 @import url("http://fonts.googleapis.com/css?family=Press+Start+2P");
 canvas{
     background:black;
+    /* this should center the canvas on most browsers */
+    position: absolute;
+    margin:auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
