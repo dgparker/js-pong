@@ -56,9 +56,9 @@ function move(key, paddle){
 //controls for ai paddle
 function ai(paddle, ball){
     if(paddle.y < ball.y){
-        paddle.y += 2;
+        paddle.y += 1;
     }else if(paddle.y > ball.y){
-        paddle.y -= 2
+        paddle.y -= 1
     }
 }
 
