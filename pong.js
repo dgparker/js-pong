@@ -132,12 +132,23 @@ function ball(width, height, color, x, y){
 
     //deflects the ball off of a paddle
     this.deflect = function(paddle) {
-        if((this.x >= paddle.x && this.x <= paddle.x + paddle.width) || (this.x + this.width >= paddle.x && this.x <= paddle.x + paddle.width)){
-            if((this.y >= paddle.y && this.y <= paddle.y + paddle.height) || (this.y + this.height >= paddle.y && this.y + this.height <= paddle.y + paddle.height)){
-                this.speedX = this.speedX * -1;
-                this.x += this.speedX;
-            }            
+        if(paddle.name === "player"){
+            if((this.x >= paddle.x && this.x <= paddle.x + paddle.width) || (this.x + this.width >= paddle.x && this.x <= paddle.x + paddle.width)){
+                if((this.y >= paddle.y && this.y <= paddle.y + paddle.height) || (this.y + this.height >= paddle.y && this.y + this.height <= paddle.y + paddle.height)){
+                    this.speedX = 2;
+                    this.x += this.speedX;
+                }            
+            }
         }
+        if(paddle.name === "ai"){
+            if((this.x >= paddle.x && this.x <= paddle.x + paddle.width) || (this.x + this.width >= paddle.x && this.x <= paddle.x + paddle.width)){
+                if((this.y >= paddle.y && this.y <= paddle.y + paddle.height) || (this.y + this.height >= paddle.y && this.y + this.height <= paddle.y + paddle.height)){
+                    this.speedX = -2;
+                    this.x += this.speedX;
+                }            
+            }
+        }
+        
     }    
 }
 
